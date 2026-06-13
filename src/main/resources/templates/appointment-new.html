@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>新增掛號</title>
+</head>
+<body>
+    <h1>新增掛號</h1>
+    
+    <div style="color: red; margin-bottom: 10px;" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+
+    <form th:action="@{/appointment/new}" th:object="${appointmentForm}" method="post">
+        <div>
+            <label>病歷號：</label>
+            <input type="text" th:field="*{chartNo}" placeholder="TEST00001">
+            <span style="color:red;" th:if="${#fields.hasErrors('chartNo')}" th:errors="*{chartNo}"></span>
+        </div>
+        <br>
+        <div>
+            <label>選擇醫師：</label>
+            <select th:field="*{doctorId}">
+                <option value="">請選擇</option>
+                <option th:each="doc : ${doctors}" 
+                        th:value="${doc.doctorId}" 
+                        th:text="${doc.name + ' (' + doc.department + ')'}"></option>
+            </select>
+            <span style="color:red;" th:if="${#fields.hasErrors('doctorId')}" th:errors="*{doctorId}"></span>
+        </div>
+        <br>
+        <div>
+            <label>預約日期：</label>
+            <input type="date" th:field="*{apptDate}">
+            <span style="color:red;" th:if="${#fields.hasErrors('apptDate')}" th:errors="*{apptDate}"></span>
+        </div>
+        <br>
+        <div>
+            <label>預約時段：</label>
+            <select th:field="*{timeSlot}">
+                <option value="">請選擇</option>
+                <option value="上午">上午</option>
+                <option value="下午">下午</option>
+                <option value="晚上">晚上</option>
+            </select>
+            <span style="color:red;" th:if="${#fields.hasErrors('timeSlot')}" th:errors="*{timeSlot}"></span>
+        </div>
+        <br>
+        <button type="submit">確認掛號</button>
+    </form>
+    <br>
+    <a th:href="@{/}">返回首頁</a>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>醫師 Dashboard</title>
+    <style>
+        .status-BOOKED { color: blue; font-weight: bold; }
+        .status-COMPLETED { color: green; font-weight: bold; }
+        .status-CANCELLED { color: gray; text-decoration: line-through; }
+        .btn-complete { background-color: #28a745; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; }
+        .btn-cancel { background-color: #dc3545; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; margin-right: 5px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { text-align: left; padding: 8px; }
+    </style>
+</head>
+<body>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2>歡迎，<span th:text="${doctor.name}"></span> (<span th:text="${doctor.department}"></span>)</h2>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">登出</button>
+        </form>
+    </div>
+    
+    <p><a th:href="@{/password}">修改密碼</a> | <a th:href="@{/}">回診所首頁</a></p>
+    <hr>
+    
+    <h3>今日掛號：<span th:text="${today}"></span></h3>
+    <p th:if="${#lists.isEmpty(appointments)}">今日尚無掛號紀錄。</p>
+
+    <table border="1" th:unless="${#lists.isEmpty(appointments)}">
+        <tr>
+            <th>時段</th>
+            <th>病患姓名</th>
+            <th>病歷號</th>
+            <th>狀態</th>
+            <th>操作</th>
+        </tr>
+        <tr th:each="appt : ${appointments}">
+            <td th:text="${appt.timeSlot}"></td>
+            <td th:text="${appt.patient.name}"></td>
+            <td th:text="${appt.patient.chartNo}"></td>
+            <td th:class="${'status-' + appt.status}" th:text="${appt.status}"></td>
+            <td>
+                <button th:if="${appt.status == 'BOOKED'}" 
+                        th:data-id="${appt.apptId}" 
+                        class="btn-cancel"
+                        onclick="cancelAppointment(this)">取消</button>
+                
+                <button th:if="${appt.status == 'BOOKED'}" 
+                        th:data-id="${appt.apptId}" 
+                        class="btn-complete"
+                        onclick="completeAppointment(this)">看診完成</button>
+            </td>
+        </tr>
+    </table>
+
+    <script>
+        // 取消掛號的 JavaScript 函數
+        function cancelAppointment(btn) {
+            const id = btn.getAttribute('data-id');
+            if (confirm("確定要取消此掛號嗎？")) {
+                fetch('/api/appointments/' + id + '/status', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'CANCELLED' })
+                }).then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert("取消失敗，請重新登入或檢查權限");
+                    }
+                });
+            }
+        }
+
+        // 🛠️ 本週全新新增：看診完成的 JavaScript 函數
+        function completeAppointment(btn) {
+            const id = btn.getAttribute('data-id');
+            if (confirm("確定此病患已看診完成嗎？")) {
+                fetch('/api/appointments/' + id + '/status', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'COMPLETED' })
+                }).then(response => {
+                    if (response.ok) {
+                        location.reload(); // 成功後重新整理網頁，觸發 Thymeleaf 重新渲染畫面
+                    } else {
+                        alert("操作失敗，請重新登入或檢查權限");
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

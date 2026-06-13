@@ -1,0 +1,52 @@
+### 第一週/第二週：健康檢查與全部醫師
+GET http://localhost:8080/api/health
+Accept: application/json
+
+###
+GET http://localhost:8080/api/doctors
+Accept: application/json
+
+###
+GET http://localhost:8080/api/doctors?department=內科
+
+###
+GET http://localhost:8080/api/doctors/D001
+
+###
+GET http://localhost:8080/api/doctors/D999
+
+
+### === 以下為本週 (Ch09-C) 新增的 API 測試 === ###
+
+### 新增一位醫師 (POST)
+POST http://localhost:8080/api/doctors
+Content-Type: application/json
+
+{
+  "doctorId": "D006",
+  "name": "測試醫師",
+  "department": "內科",
+  "specialty": "測試專長"
+}
+
+### 更新剛剛的醫師 (PUT)
+PUT http://localhost:8080/api/doctors/D006
+Content-Type: application/json
+
+{
+  "name": "測試醫師",
+  "department": "內科",
+  "specialty": "專長已被修改"
+}
+
+### 刪除該醫師 (DELETE)
+DELETE http://localhost:8080/api/doctors/D006
+
+### 取得所有病患
+GET http://localhost:8080/api/patients
+
+### 取得掛號總數
+GET http://localhost:8080/api/appointments/count
+
+### 依日期篩選掛號
+GET http://localhost:8080/api/appointments?date=2026-05-20

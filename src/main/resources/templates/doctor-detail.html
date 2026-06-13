@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>醫師詳細資料</title>
+</head>
+<body>
+    <h1>醫師詳細資料</h1>
+    <hr>
+    <p><strong>醫師編號：</strong> <span th:text="${doctor.doctorId}"></span></p>
+    <p><strong>醫師姓名：</strong> <span th:text="${doctor.name}"></span></p>
+    <p><strong>所屬科別：</strong> <span th:text="${doctor.department}"></span></p>
+    <p><strong>專業專長：</strong> <span th:text="${doctor.specialty}"></span></p>
+    <br>
+    <a th:href="@{/doctors}">返回醫師清單</a>
+</body>
+</html>

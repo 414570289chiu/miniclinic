@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>診所統計</title>
+</head>
+<body>
+    <h1>系統營運統計</h1>
+    <nav>
+        <a th:href="@{/}">首頁</a> | 
+        <a th:href="@{/stats}">系統統計</a>
+    </nav>
+    <hr>
+    
+    <p><strong>醫師總數：</strong> <span th:text="${doctorCount}"></span> 人</p>
+    <p><strong>病患總數：</strong> <span th:text="${patientCount}"></span> 人</p>
+    <p><strong>掛號總數：</strong> <span th:text="${apptCount}"></span> 筆</p>
+    
+    <h3>各科別掛號數</h3>
+    <ul>
+        <li th:each="stat : ${deptStats}">
+            <span th:text="${stat[0]}"></span>: <span th:text="${stat[1]}"></span> 筆
+        </li>
+    </ul>
+</body>
+</html>

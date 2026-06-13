@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>掛號完成</title>
+</head>
+<body>
+    <h1>掛號摘要</h1>
+    <hr>
+    <p><strong>掛號編號：</strong> <span th:text="${savedAppt.apptId}"></span></p>
+    <p><strong>病歷號：</strong> <span th:text="${form.chartNo}"></span></p>
+    <p><strong>醫師姓名：</strong> <span th:text="${doctorName}"></span></p>
+    <p><strong>科別：</strong> <span th:text="${deptName}"></span></p>
+    <p><strong>日期：</strong> <span th:text="${form.apptDate}"></span></p>
+    <p><strong>時段：</strong> <span th:text="${form.timeSlot}"></span></p>
+    
+    <p style="color: blue; font-weight: bold;">提示：已成功寫入資料庫！</p>
+    <br>
+    <a th:href="@{/}">回診所首頁</a>
+</body>
+</html>

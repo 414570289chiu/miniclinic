@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>醫師清單</title>
+</head>
+<body>
+    <h1>醫師清單</h1>
+    <nav>
+        <a th:href="@{/}">回首頁</a>
+    </nav>
+    <hr>
+    
+    <div style="margin-bottom: 20px;">
+        <a th:href="@{/doctors}" th:style="${selectedDept == null} ? 'color: red; font-weight: bold;' : ''">全部</a> | 
+        <span th:each="dept : ${departments}">
+            <a th:href="@{/doctors(department=${dept})}" 
+               th:text="${dept}" 
+               th:style="${dept == selectedDept} ? 'color: red; font-weight: bold;' : ''"></a> | 
+        </span>
+    </div>
+
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>姓名</th>
+            <th>科別</th>
+        </tr>
+        <tr th:each="doctor : ${doctors}">
+            <td><a th:href="@{/doctors/{id}(id=${doctor.doctorId})}" th:text="${doctor.name}"></a></td>
+            <td th:text="${doctor.department}"></td>
+        </tr>
+    </table>
+    
+    <div th:if="${#lists.isEmpty(doctors)}" style="margin-top: 10px; color: gray;">
+        目前沒有符合此科別的醫師。
+    </div>
+</body>
+</html>

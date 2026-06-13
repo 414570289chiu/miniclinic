@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MiniClinic 首頁</title>
+</head>
+<body>
+    <h1>歡迎來到 MiniClinic 社區診所</h1>
+
+    <nav>
+        <a th:href="@{/}">首頁</a> | 
+        <a th:href="@{/doctors}">醫師清單</a> | 
+        <a th:href="@{/appointment/new}">線上掛號</a> | 
+        <a th:href="@{/appointments}">掛號紀錄</a> | 
+        <a th:href="@{/stats}">系統統計</a>
+        <a th:href="@{/login}">醫師登入</a> |
+    </nav>
+
+    <hr>
+
+    <h2>我們的科別介紹</h2>
+    <ul>
+        <li><strong>家醫科</strong>：一般內科、慢性病管理</li>
+        <li><strong>內科</strong>：心臟血管、高血壓</li>
+        <li><strong>復健科</strong>：運動傷害、脊椎復健</li>
+        <li><strong>小兒科</strong>：兒童感冒、疫苗接種</li>
+        <li><strong>身心科</strong>：焦慮、失眠、情緒調適</li>
+    </ul>
+</body>
+</html>

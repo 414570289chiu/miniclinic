@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>掛號紀錄</title>
+</head>
+<body>
+    <h1>所有掛號紀錄</h1>
+    <nav>
+        <a th:href="@{/}">首頁</a> | 
+        <a th:href="@{/appointments}">掛號紀錄</a>
+    </nav>
+    <hr>
+    
+    <p th:if="${#lists.isEmpty(appointments)}">目前無任何掛號紀錄</p>
+
+    <table border="1" cellpadding="5" th:unless="${#lists.isEmpty(appointments)}">
+        <tr>
+            <th>編號</th>
+            <th>病歷號</th>
+            <th>病患姓名</th>
+            <th>醫師</th>
+            <th>科別</th>
+            <th>日期</th>
+            <th>時段</th>
+            <th>狀態</th>
+        </tr>
+        <tr th:each="appt : ${appointments}">
+            <td th:text="${appt.apptId}"></td>
+            <td th:text="${appt.patient.chartNo}"></td>
+            <td th:text="${appt.patient.name}"></td>
+            <td th:text="${appt.doctor.name}"></td>
+            <td th:text="${appt.doctor.department}"></td>
+            <td th:text="${appt.apptDate}"></td>
+            <td th:text="${appt.timeSlot}"></td>
+            <td th:text="${appt.status}"></td>
+        </tr>
+    </table>
+</body>
+</html>

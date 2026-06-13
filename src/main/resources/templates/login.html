@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>醫師登入</title>
+</head>
+<body>
+    <h1>醫師登入</h1>
+    <hr>
+    <div style="background-color: #ffcccc; color: red; padding: 10px; margin-bottom: 10px;" 
+         th:if="${errorMessage}" th:text="${errorMessage}"></div>
+
+    <form th:action="@{/login}" th:object="${loginForm}" method="post">
+        <div>
+            <label>醫師編號：</label>
+            <input type="text" th:field="*{doctorId}" placeholder="D001">
+            <span style="color:red;" th:if="${#fields.hasErrors('doctorId')}" th:errors="*{doctorId}"></span>
+        </div>
+        <br>
+        <div>
+            <label>密碼：</label>
+            <input type="password" th:field="*{password}">
+            <span style="color:red;" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+        </div>
+        <br>
+        <button type="submit">登入</button>
+    </form>
+    <br>
+    <a th:href="@{/}">返回首頁</a>
+</body>
+</html>
